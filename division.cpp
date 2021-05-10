@@ -238,7 +238,7 @@ int XorBit::mpc_xor_bit(
 
 
 
-int ReprocialDiv::ReprocialDivfor2(
+int ReciprocalDiv::ReciprocalDivfor2(
   const vector<mpc_t>& shared_numerator_vec, const vector<mpc_t>& shared_denominator_vec,
   vector<mpc_t>& shared_quotient_vec, size_t vec_size, bool all_less) {
   if (all_less) {
@@ -341,7 +341,7 @@ int ReprocialDiv::ReprocialDivfor2(
     //这里的疑惑是，我用的是share的值，那我直接使用这种算法计算不太能保证最后得到的值就能对啊，这个算法并非经过SNN考量的。
     vector<mpc_t> iteraion_temp_2A(vec_size,0);//2*A
     vector<mpc_t> iteraion_temp_AA(vec_size,0);//A^2
-    vector<mpc_t> den_reprocial(vec_size,0);//这个就是最后要和分子相乘的分母的倒数
+    vector<mpc_t> den_reciprocal(vec_size,0);//这个就是最后要和分子相乘的分母的倒数
     vector<mpc_t> quo(vec_size,0);
     for (int j = 0; j < size; ++j) {
       iteraion_temp[i] = result[i] << 1;//2*A
@@ -350,7 +350,7 @@ int ReprocialDiv::ReprocialDivfor2(
     for(i=0;i<=iteration_time;i++)
     {
       GetMpcOpInner(DotProduct)->Run(result, result, iteraion_temp_AA, vec_size);
-      GetMpcOpInner(DotProduct)->Run(iteraion_temp_AA, denominator_vec, den_reprocial, vec_size);
+      GetMpcOpInner(DotProduct)->Run(iteraion_temp_AA, denominator_vec, den_reciprocal, vec_size);
     }
     GetMpcOpInner(DotProduct)->Run(numerator_vec, den_reprocial, quo, vec_size);//这里是最后一步，但是还有一步，结果的正负没完成，结果的正负就存放在quotient_sign里面。
 
